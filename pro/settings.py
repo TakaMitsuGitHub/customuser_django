@@ -135,3 +135,42 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'user.CustomUserModel'
+
+# ログ設定 ===
+LOGGING_DIR = os.path.join(BASE_DIR, 'logs')  # ログを保存するディレクトリ
+if not os.path.exists(LOGGING_DIR):
+    os.makedirs(LOGGING_DIR)
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {message}',
+            'style': '{',
+        },
+        'simple': {
+            'format': '{levelname} {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.handlers.RotatingFileHandler',  # ローテーション機能付き
+            'filename': os.path.join(LOGGING_DIR, 'logging_app.log'),  # ログファイル名
+            'maxBytes': 1024 * 1024 * 5,  # 5 MB
+            'backupCount': 5,  # 古いログファイルは5個まで保持
+            'formatter': 'verbose',
+            'encoding': 'utf-8',  # UTF-8エンコーディングを使用
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    },
+}
+# ログ設定 end ===
