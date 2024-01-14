@@ -1,6 +1,6 @@
 # customuser_django
 
-git clone https://github.com/TakaMitsuGitHub/customuser_django.git
+git clone
 
 エクスプローラーから「.git」 削除
 
